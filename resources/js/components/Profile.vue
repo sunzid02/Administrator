@@ -6,7 +6,7 @@
                     <div class="card-header">Profile Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        Profile C.
                     </div>
                 </div>
             </div>
@@ -18,6 +18,9 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+        },
+        created() {
+            console.log('Component created.')
         }
     }
 </script>
