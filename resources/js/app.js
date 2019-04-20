@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
-
+import { Form, HasError, AlertError } from 'vform';
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
@@ -34,6 +34,9 @@ const router = new VueRouter({
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
