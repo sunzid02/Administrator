@@ -34,11 +34,13 @@
                     <td> {{ user.type | upText }} </td>
                     <td> {{ user.created_at | customDateFormat }} </td>
                     <td>
+                        <!-- update user -->
                         <a href="#">
                             <i class="fa fa-edit blue"></i>
                         </a>
                         /
-                        <a href="#">
+                        <!-- delete -->
+                        <a href="#" @click="deleteUser(user.id)">
                             <i class="fa fa-trash red"></i>
                         </a>
                     </td>
@@ -177,7 +179,7 @@
                            this.$Progress.finish();
                    })
                    .catch(()=>{
-                                              
+
                    });
             },
 
@@ -185,6 +187,35 @@
               axios.get('api/user').then(
                   ({ data }) => (this.users = data.data)
               );  
+            },
+
+            //deleteUser
+            deleteUser: function(userId) {
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {  
+                        if (result.value) 
+                        {                            
+                            // send req to server
+                            this.form.delete('api/user/'+userId).then(() =>{                            
+                                swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                                Fire.$emit('afterCreate'); 
+                            }).catch( ()=> {
+                                swal("Failed!", "There was something wronge.", "warning");
+                            });
+                        }
+                      
+                })
             },
         },
 
