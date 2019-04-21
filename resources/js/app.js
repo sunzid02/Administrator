@@ -7,8 +7,11 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
+
 import { Form, HasError, AlertError } from 'vform';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
+import moment from 'moment';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,6 +40,27 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+
+
+//Filter Global
+Vue.filter('upText', function(data) {
+    return data.toUpperCase();
+});
+
+Vue.filter('customDateFormat', function(data) {
+    return moment(data).format('MMMM Do YYYY');
+});
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
