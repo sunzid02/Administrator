@@ -12,10 +12,21 @@ require('./bootstrap');
 import { Form, HasError, AlertError } from 'vform';
 import VueRouter from 'vue-router';
 import moment from 'moment';
-import VueProgressBar from 'vue-progressbar'
+import VueProgressBar from 'vue-progressbar';
 
 window.Vue = require('vue');
 window.Form = Form;
+
+import swal from 'sweetalert2';
+window.swal = swal;
+
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+window.toast = toast;
 
 Vue.use(VueRouter)
 const options = {
@@ -33,6 +44,15 @@ const options = {
 }
 
 Vue.use(VueProgressBar, options)
+
+
+
+
+//custom events..
+window.Fire = new Vue();
+
+
+
 
 //Routes
 const routes = [

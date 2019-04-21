@@ -154,7 +154,24 @@
                 //  [App.vue specific] When App.vue is first loaded start the progress bar
                     this.$Progress.start();
 
-                    this.form.post('api/user');
+                   var response =  this.form.post('api/user');
+                //    console.log(response);
+                   
+                    // swal.fire(
+                    //     'Good job!',
+                    //     'User created succesfully!',
+                    //     'success'
+                    // );
+                     
+                    //generate events
+                    Fire.$emit('afterCreate'); 
+
+                    $('#addNew').modal('hide');
+                    toast.fire({
+                        type: 'success',
+                        title: 'User created successfully'
+                    });
+
                     this.$Progress.finish();
             },
 
@@ -172,6 +189,11 @@
 
         created() {
             this.loadUsers();
+            
+            Fire.$on('afterCreate', () =>{
+                this.loadUsers();
+            });
+            // setInterval( ()=>  this.loadUsers() ,3000);
         }
     }
 </script>
