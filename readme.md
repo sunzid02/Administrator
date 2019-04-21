@@ -12,5 +12,7 @@
 - npm i axios vform
 - npm i moment --save
 - npm install vue-progressbar --save
+- npm install sweetalert2 --save
+
 
 
