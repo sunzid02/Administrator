@@ -2061,7 +2061,12 @@ __webpack_require__.r(__webpack_exports__);
   //     console.log(this.loadUsers());
   // },
   created: function created() {
+    var _this2 = this;
+
     this.loadUsers();
+    setInterval(function () {
+      return _this2.loadUsers();
+    }, 3000);
   }
 });
 
