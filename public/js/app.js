@@ -2015,6 +2015,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2031,30 +2033,58 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     createUser: function createUser() {
+      var _this = this;
+
       //  [App.vue specific] When App.vue is first loaded start the progress bar
       this.$Progress.start();
-      var response = this.form.post('api/user'); //    console.log(response);
-      // swal.fire(
-      //     'Good job!',
-      //     'User created succesfully!',
-      //     'success'
-      // );
-      //generate events
+      this.form.post('api/user').then(function () {
+        //    console.log(response);
+        // swal.fire(
+        //     'Good job!',
+        //     'User created succesfully!',
+        //     'success'
+        // );
+        //generate events
+        Fire.$emit('afterCreate');
+        $('#addNew').modal('hide');
+        toast.fire({
+          type: 'success',
+          title: 'User created successfully'
+        });
 
-      Fire.$emit('afterCreate');
-      $('#addNew').modal('hide');
-      toast.fire({
-        type: 'success',
-        title: 'User created successfully'
-      });
-      this.$Progress.finish();
+        _this.$Progress.finish();
+      })["catch"](function () {});
     },
     loadUsers: function loadUsers() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('api/user').then(function (_ref) {
         var data = _ref.data;
-        return _this.users = data.data;
+        return _this2.users = data.data;
+      });
+    },
+    //deleteUser
+    deleteUser: function deleteUser(userId) {
+      var _this3 = this;
+
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          // send req to server
+          _this3.form["delete"]('api/user/' + userId).then(function () {
+            swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            Fire.$emit('afterCreate');
+          })["catch"](function () {
+            swal("Failed!", "There was something wronge.", "warning");
+          });
+        }
       });
     }
   },
@@ -2063,11 +2093,12 @@ __webpack_require__.r(__webpack_exports__);
   //     console.log(this.loadUsers());
   // },
   created: function created() {
-    var _this2 = this;
+    var _this4 = this;
 
-    this.loadUsers();
+    this.loadUsers(); //listen events
+
     Fire.$on('afterCreate', function () {
-      _this2.loadUsers();
+      _this4.loadUsers();
     }); // setInterval( ()=>  this.loadUsers() ,3000);
   }
 });
@@ -58879,7 +58910,23 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm._m(2, true)
+                      _c("td", [
+                        _vm._m(2, true),
+                        _vm._v("\n                    /\n                    "),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteUser(user.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash red" })]
+                        )
+                      ])
                     ])
                   })
                 ],
@@ -59208,14 +59255,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-edit blue" })
-      ]),
-      _vm._v("\n                    /\n                    "),
-      _c("a", { attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-trash red" })
-      ])
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-edit blue" })
     ])
   },
   function() {
@@ -74147,7 +74188,7 @@ var options = {
   failedColor: '#874b4b',
   thickness: '5px',
   transition: {
-    speed: '0.02s',
+    speed: '0.2s',
     opacity: '0.6s',
     termination: 300
   },
