@@ -154,25 +154,31 @@
                 //  [App.vue specific] When App.vue is first loaded start the progress bar
                     this.$Progress.start();
 
-                   var response =  this.form.post('api/user');
-                //    console.log(response);
-                   
-                    // swal.fire(
-                    //     'Good job!',
-                    //     'User created succesfully!',
-                    //     'success'
-                    // );
-                     
-                    //generate events
-                    Fire.$emit('afterCreate'); 
+                   this.form.post('api/user')
+                   .then(() =>{
 
-                    $('#addNew').modal('hide');
-                    toast.fire({
-                        type: 'success',
-                        title: 'User created successfully'
-                    });
-
-                    this.$Progress.finish();
+                       //    console.log(response);
+                          
+                           // swal.fire(
+                           //     'Good job!',
+                           //     'User created succesfully!',
+                           //     'success'
+                           // );
+                            
+                           //generate events
+                           Fire.$emit('afterCreate'); 
+       
+                           $('#addNew').modal('hide');
+                           toast.fire({
+                               type: 'success',
+                               title: 'User created successfully'
+                           });
+       
+                           this.$Progress.finish();
+                   })
+                   .catch(()=>{
+                                              
+                   });
             },
 
             loadUsers: function() {
@@ -190,6 +196,7 @@
         created() {
             this.loadUsers();
             
+            //listen events
             Fire.$on('afterCreate', () =>{
                 this.loadUsers();
             });

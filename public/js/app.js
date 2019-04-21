@@ -2031,30 +2031,34 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     createUser: function createUser() {
+      var _this = this;
+
       //  [App.vue specific] When App.vue is first loaded start the progress bar
       this.$Progress.start();
-      var response = this.form.post('api/user'); //    console.log(response);
-      // swal.fire(
-      //     'Good job!',
-      //     'User created succesfully!',
-      //     'success'
-      // );
-      //generate events
+      this.form.post('api/user').then(function () {
+        //    console.log(response);
+        // swal.fire(
+        //     'Good job!',
+        //     'User created succesfully!',
+        //     'success'
+        // );
+        //generate events
+        Fire.$emit('afterCreate');
+        $('#addNew').modal('hide');
+        toast.fire({
+          type: 'success',
+          title: 'User created successfully'
+        });
 
-      Fire.$emit('afterCreate');
-      $('#addNew').modal('hide');
-      toast.fire({
-        type: 'success',
-        title: 'User created successfully'
-      });
-      this.$Progress.finish();
+        _this.$Progress.finish();
+      })["catch"](function () {});
     },
     loadUsers: function loadUsers() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('api/user').then(function (_ref) {
         var data = _ref.data;
-        return _this.users = data.data;
+        return _this2.users = data.data;
       });
     }
   },
@@ -2063,11 +2067,12 @@ __webpack_require__.r(__webpack_exports__);
   //     console.log(this.loadUsers());
   // },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
-    this.loadUsers();
+    this.loadUsers(); //listen events
+
     Fire.$on('afterCreate', function () {
-      _this2.loadUsers();
+      _this3.loadUsers();
     }); // setInterval( ()=>  this.loadUsers() ,3000);
   }
 });
@@ -74147,7 +74152,7 @@ var options = {
   failedColor: '#874b4b',
   thickness: '5px',
   transition: {
-    speed: '0.02s',
+    speed: '0.2s',
     opacity: '0.6s',
     termination: 300
   },
