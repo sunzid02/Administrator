@@ -142,13 +142,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <div class="content-wrapper">
     <!-- Main content -->
     <div class="content">
+      
       <div class="container-fluid">
 
         <!-- component matched by the route will render here -->
          <router-view></router-view>
         
+        <!-- set progressbar -->
+          <vue-progress-bar></vue-progress-bar>        
         <!-- /.row -->
       </div><!-- /.container-fluid -->
+
     </div>
     <!-- /.content -->
   </div>

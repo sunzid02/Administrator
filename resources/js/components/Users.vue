@@ -151,7 +151,11 @@
 
         methods:{
             createUser: function(){
+                //  [App.vue specific] When App.vue is first loaded start the progress bar
+                    this.$Progress.start();
+
                     this.form.post('api/user');
+                    this.$Progress.finish();
             },
 
             loadUsers: function() {

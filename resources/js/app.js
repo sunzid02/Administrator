@@ -6,14 +6,35 @@
  */
 
 require('./bootstrap');
-window.Vue = require('vue');
+
+
 
 import { Form, HasError, AlertError } from 'vform';
 import VueRouter from 'vue-router';
 import moment from 'moment';
+import VueProgressBar from 'vue-progressbar'
+
+window.Vue = require('vue');
+window.Form = Form;
 
 Vue.use(VueRouter)
+const options = {
+    color: '#bffaf3',
+    failedColor: '#874b4b',
+    thickness: '5px',
+    transition: {
+        speed: '0.02s',
+        opacity: '0.6s',
+        termination: 300
+    },
+    autoRevert: true,
+    location: 'top',
+    inverse: false
+}
 
+Vue.use(VueProgressBar, options)
+
+//Routes
 const routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
@@ -36,8 +57,6 @@ const router = new VueRouter({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 

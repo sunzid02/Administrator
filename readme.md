@@ -10,5 +10,7 @@
 - npm install --save-dev @fortawesome/fontawesome-free
 - npm install vue-router
 - npm i axios vform
+- npm i moment --save
+- npm install vue-progressbar --save
 
 
