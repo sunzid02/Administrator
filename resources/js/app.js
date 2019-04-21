@@ -45,6 +45,15 @@ const options = {
 
 Vue.use(VueProgressBar, options)
 
+
+
+
+//custom events..
+window.Fire = new Vue();
+
+
+
+
 //Routes
 const routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },

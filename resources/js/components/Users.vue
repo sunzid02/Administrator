@@ -162,6 +162,10 @@
                     //     'User created succesfully!',
                     //     'success'
                     // );
+                     
+                    //generate events
+                    Fire.$emit('afterCreate'); 
+
                     $('#addNew').modal('hide');
                     toast.fire({
                         type: 'success',
@@ -186,7 +190,10 @@
         created() {
             this.loadUsers();
             
-            setInterval( ()=>  this.loadUsers() ,3000);
+            Fire.$on('afterCreate', () =>{
+                this.loadUsers();
+            });
+            // setInterval( ()=>  this.loadUsers() ,3000);
         }
     }
 </script>

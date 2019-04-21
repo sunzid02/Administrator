@@ -2039,7 +2039,9 @@ __webpack_require__.r(__webpack_exports__);
       //     'User created succesfully!',
       //     'success'
       // );
+      //generate events
 
+      Fire.$emit('afterCreate');
       $('#addNew').modal('hide');
       toast.fire({
         type: 'success',
@@ -2064,9 +2066,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     this.loadUsers();
-    setInterval(function () {
-      return _this2.loadUsers();
-    }, 3000);
+    Fire.$on('afterCreate', function () {
+      _this2.loadUsers();
+    }); // setInterval( ()=>  this.loadUsers() ,3000);
   }
 });
 
@@ -74153,7 +74155,9 @@ var options = {
   location: 'top',
   inverse: false
 };
-Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_3___default.a, options); //Routes
+Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_3___default.a, options); //custom events..
+
+window.Fire = new Vue(); //Routes
 
 var routes = [{
   path: '/dashboard',
