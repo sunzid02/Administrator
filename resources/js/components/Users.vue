@@ -64,13 +64,14 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addNewLabel">Add New</h5>
+                        <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New</h5>
+                        <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
-                    <form @submit.prevent="createUser">
+                    <form @submit.prevent=" editMode ? updateUser() :createUser()">
                         <div class="modal-body">
                         
                             <!-- username -->
@@ -118,7 +119,8 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" v-show="editMode" class="btn btn-success">Update</button>
+                            <button type="submit" v-show="!editMode" class="btn btn-primary">Create</button>
                         </div>
                     </form>        
 
@@ -139,6 +141,7 @@
 
         data(){
             return{
+
                 form: new Form({
                      name:'',
                      email:'',
@@ -148,17 +151,25 @@
                      photo:''
                 }),
 
+                editMode: false,
                 users:{},
             }
         },
 
         methods:{
+            updateUser: function() {
+                // this.editMode = true,
+                alert('update user');    
+            },
+
             newModal: function() {
+                this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
 
             editModal: function(user) {
+                this.editMode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
                 this.form.fill(user);
@@ -166,7 +177,8 @@
 
             createUser: function(){
                 //  [App.vue specific] When App.vue is first loaded start the progress bar
-                    this.$Progress.start();
+                this.$Progress.start();
+                this.editMode = false,
 
                    this.form.post('api/user')
                    .then(() =>{
