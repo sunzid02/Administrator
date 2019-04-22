@@ -2024,6 +2024,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: new Form({
+        id: '',
         name: '',
         email: '',
         password: '',
@@ -2037,8 +2038,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateUser: function updateUser() {
-      // this.editMode = true,
-      alert('update user');
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.put('api/user/' + this.form.id).then(function () {
+        // success
+        $('#addNew').modal('hide');
+        swal.fire('Updated!', 'User information has been updated.', 'success');
+        Fire.$emit('afterCreate');
+
+        _this.$Progress.finish();
+      })["catch"](function () {
+        _this.$Progress.fail();
+      });
     },
     newModal: function newModal() {
       this.editMode = false;
@@ -2052,7 +2064,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(user);
     },
     createUser: function createUser() {
-      var _this = this;
+      var _this2 = this;
 
       //  [App.vue specific] When App.vue is first loaded start the progress bar
       this.$Progress.start();
@@ -2071,20 +2083,20 @@ __webpack_require__.r(__webpack_exports__);
           title: 'User created successfully'
         });
 
-        _this.$Progress.finish();
+        _this2.$Progress.finish();
       })["catch"](function () {});
     },
     loadUsers: function loadUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('api/user').then(function (_ref) {
         var data = _ref.data;
-        return _this2.users = data.data;
+        return _this3.users = data.data;
       });
     },
     //deleteUser
     deleteUser: function deleteUser(userId) {
-      var _this3 = this;
+      var _this4 = this;
 
       swal.fire({
         title: 'Are you sure?',
@@ -2097,7 +2109,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           // send req to server
-          _this3.form["delete"]('api/user/' + userId).then(function () {
+          _this4.form["delete"]('api/user/' + userId).then(function () {
             swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('afterCreate');
           })["catch"](function () {
@@ -2112,12 +2124,12 @@ __webpack_require__.r(__webpack_exports__);
   //     console.log(this.loadUsers());
   // },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.loadUsers(); //listen events
 
     Fire.$on('afterCreate', function () {
-      _this4.loadUsers();
+      _this5.loadUsers();
     }); // setInterval( ()=>  this.loadUsers() ,3000);
   }
 });

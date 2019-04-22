@@ -143,6 +143,7 @@
             return{
 
                 form: new Form({
+                     id:'',
                      name:'',
                      email:'',
                      password:'',
@@ -158,8 +159,28 @@
 
         methods:{
             updateUser: function() {
-                // this.editMode = true,
-                alert('update user');    
+                this.$Progress.start();
+
+                this.form.put('api/user/'+ this.form.id)
+                .then(() => {
+
+                    // success
+                    $('#addNew').modal('hide');
+                    swal.fire(
+                        'Updated!',
+                        'User information has been updated.',
+                        'success'
+                    )
+
+                    Fire.$emit('afterCreate');
+
+                    this.$Progress.finish();
+
+                })
+                .catch(()=>{
+                    this.$Progress.fail();
+
+                });
             },
 
             newModal: function() {
