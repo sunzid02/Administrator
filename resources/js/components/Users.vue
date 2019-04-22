@@ -8,7 +8,7 @@
                 <h3 class="card-title">Users List</h3>
 
                 <div class="card-tools">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addNew">
+                    <button class="btn btn-success" @click="newModal">
                           Add New 
                       <i class="fas fa-user-plus fa-fw"></i> 
                     </button>
@@ -35,7 +35,7 @@
                     <td> {{ user.created_at | customDateFormat }} </td>
                     <td>
                         <!-- update user -->
-                        <a href="#">
+                        <a href="#" @click="editModal(user)">
                             <i class="fa fa-edit blue"></i>
                         </a>
                         /
@@ -91,7 +91,8 @@
                             <div class="form-group">
                                 <textarea v-model="form.bio" name="bio" id="bio"
                                 placeholder="Short bio for user (Optional)"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
+                                class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
+                                </textarea>
                                 <has-error :form="form" field="bio"></has-error>
                             </div>
 
@@ -152,6 +153,17 @@
         },
 
         methods:{
+            newModal: function() {
+                this.form.reset();
+                $('#addNew').modal('show');
+            },
+
+            editModal: function(user) {
+                this.form.reset();
+                $('#addNew').modal('show');
+                this.form.fill(user);
+            },
+
             createUser: function(){
                 //  [App.vue specific] When App.vue is first loaded start the progress bar
                     this.$Progress.start();
