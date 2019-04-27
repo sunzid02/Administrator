@@ -73,7 +73,7 @@
                             <h3 class="text-center">Display User Activity</h3>                        
                         </div>
 
-                            <!-- settings tab-->
+                        <!-- settings tab-->
                         <div class="tab-pane active show" id="settings">
                             <form class="form-horizontal">
                             <div class="form-group">
@@ -104,13 +104,15 @@
                                 <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
 
-                                <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                            <!-- profile photo -->
+                            <div class="form-group">
+                                <label for="photo" class="col-sm-2 control-label">Profile Photo</label>
+                                <div class="col-sm-12">
+                                    <input type="file" @change="updateProfile" name="photo" class="form-input">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
@@ -157,6 +159,24 @@
                 }),
 
             }
+        },
+
+        methods:{
+
+            updateProfile: function(e) {
+                // console.log('dada');
+                let file = e.target.files[0];
+
+                let reader = new FileReader();
+
+                reader.onloadend = (file) => {
+                    // console.log('tata', reader.result);
+                    // console.log(reader);
+                    this.form.photo = reader.result;
+                    
+                }
+                reader.readAsDataURL(file);
+            },
         },
 
         mounted() {
