@@ -80,7 +80,7 @@
                                 <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                                 <div class="col-sm-10">
-                                <input type="email"  v-model="form.name" class="form-control" id="inputName" placeholder="Name">
+                                <input type="name"  v-model="form.name" class="form-control" id="inputName" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -122,11 +122,13 @@
                                 </div>
                                 </div>
                             </div>
+                           
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-danger">Submit</button>
+                                <button type="submit" @click.prevent="updateInfo" class="btn btn-success">Update</button>
                                 </div>
                             </div>
+
                             </form>
                         </div>
                         <!-- /.tab-pane -->
@@ -162,6 +164,15 @@
         },
 
         methods:{
+            updateInfo: function () {
+                this.form.put('api/profile/')
+                .then(() => {
+
+                })
+                .catch(()=>{
+
+                });
+            },
 
             updateProfile: function(e) {
                 // console.log('dada');
