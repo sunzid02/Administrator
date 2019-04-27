@@ -13,6 +13,10 @@
 - npm i moment --save
 - npm install vue-progressbar --save
 - npm install sweetalert2 --save
+- composer require laravel/passport
+- php artisan vendor:publish --tag=passport-components
+
+
 
 
 
