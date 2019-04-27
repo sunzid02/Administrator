@@ -15,6 +15,7 @@
 - npm install sweetalert2 --save
 - composer require laravel/passport
 - php artisan vendor:publish --tag=passport-components
+- composer require intervention/image
 
 
 
