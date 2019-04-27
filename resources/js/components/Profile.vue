@@ -18,7 +18,7 @@
                 <div class="card card-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header text-white" style="background-image:url('./img/user-cover.jpg')">
-                    <h3 class="widget-user-username">ZIA</h3>
+                    <h3 class="widget-user-username">{{ form.name }}</h3>
                     <h5 class="widget-user-desc">ABBY</h5>
                 </div>
                 <div class="widget-user-image">
@@ -80,14 +80,14 @@
                                 <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                                 <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                <input type="email"  v-model="form.name" class="form-control" id="inputName" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                                 <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                <input type="email" class="form-control"  v-model="form.email" id="inputEmail" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -143,8 +143,33 @@
 
 <script>
     export default {
+        data(){
+            return{
+
+                form: new Form({
+                     id:'',
+                     name:'',
+                     email:'',
+                     password:'',
+                     type:'',
+                     bio:'',
+                     photo:''
+                }),
+
+            }
+        },
+
         mounted() {
             console.log('Component mounted.')
-        }
+        },
+
+        created(){
+            console.log('Component created.');
+            
+            axios.get('api/profile')
+            .then(
+                  ({ data }) => (this.form.fill(data))
+            );  
+        },
     }
 </script>
