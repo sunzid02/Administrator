@@ -2047,13 +2047,22 @@ __webpack_require__.r(__webpack_exports__);
       var file = e.target.files[0];
       var reader = new FileReader();
 
-      reader.onloadend = function (file) {
-        // console.log('tata', reader.result);
-        // console.log(reader);
-        _this.form.photo = reader.result;
-      };
+      if (file['size'] < 21111755) //2mb
+        {
+          reader.onloadend = function (file) {
+            // console.log('tata', reader.result);
+            // console.log(reader);
+            _this.form.photo = reader.result;
+          };
 
-      reader.readAsDataURL(file);
+          reader.readAsDataURL(file);
+        } else {
+        swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'File size must be less than 2MB'
+        });
+      }
     }
   },
   mounted: function mounted() {
