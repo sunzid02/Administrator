@@ -110,6 +110,7 @@
 
                                 <div class="col-sm-10">
                                      <textarea class="form-control" id="inputExperience" placeholder="Experience"
+                                      v-model="form.bio"
                                      :class="{ 'is-invalid': form.errors.has('inputExperience') }"></textarea>
                                      <has-error :form='form' field='inputExperience'></has-error>
 

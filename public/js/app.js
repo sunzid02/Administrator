@@ -2038,6 +2038,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -60856,6 +60857,14 @@ var render = function() {
                         { staticClass: "col-sm-10" },
                         [
                           _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.bio,
+                                expression: "form.bio"
+                              }
+                            ],
                             staticClass: "form-control",
                             class: {
                               "is-invalid": _vm.form.errors.has(
@@ -60865,6 +60874,15 @@ var render = function() {
                             attrs: {
                               id: "inputExperience",
                               placeholder: "Experience"
+                            },
+                            domProps: { value: _vm.form.bio },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "bio", $event.target.value)
+                              }
                             }
                           }),
                           _vm._v(" "),
