@@ -63,12 +63,27 @@ class UserController extends Controller
 
         $user =  auth('api')->user();
 
-        if ($request->photo) 
+        //validation
+        $this->validate($request ,[
+            'name' => 'required | string | max:50',
+            'email' => 'required | email |string | max:60 | unique:users,email,'.$user->id,//if this userid's user email is same then skip validation
+            'password' => 'sometimes | required | min: 5',
+        ]);
+
+        $currentPhoto = $user->photo;
+        
+        if ($request->photo != $currentPhoto) 
         {
           $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
           
           \Image::make($request->photo)->save(public_path('img/profile/').$name);
+          
+          $request->merge([
+              'photo' => $name,
+          ]);
         }
+
+        $user->update($request->all());
 
         return ['message' => "success"];
     }
