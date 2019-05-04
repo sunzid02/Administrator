@@ -22,7 +22,7 @@
                     <h5 class="widget-user-desc">ABBY</h5>
                 </div>
                 <div class="widget-user-image">
-                    <img class="img-circle"  alt="User Avatar">
+                    <img class="img-circle"  alt="User Avatar" :src="getProfilePhoto()"> 
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -181,6 +181,13 @@
         },
 
         methods:{
+            
+            getProfilePhoto: function () {
+                let prefix = (this.form.photo.match(/\//) ? '' : '/img/profile/');
+                return prefix + this.form.photo;
+                                //   return  "img/profile/" + this.form.photo; 
+            },
+
             updateInfo: function () {
                 this.$Progress.start();
                 this.form.put('api/profile/')
