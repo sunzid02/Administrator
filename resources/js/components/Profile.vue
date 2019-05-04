@@ -83,6 +83,7 @@
                                 <input type="name"  v-model="form.name" class="form-control" id="inputName" placeholder="Name">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
@@ -90,13 +91,7 @@
                                 <input type="email" class="form-control"  v-model="form.email" id="inputEmail" placeholder="Email">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputName2" class="col-sm-2 control-label">Name</label>
 
-                                <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
 
@@ -113,13 +108,16 @@
                                 </div>
                             </div>
 
+                            <!-- passport -->
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                    </label>
-                                </div>
+                                <label for="password" class="col-sm-12 control-label">Passport (leave empty if not changing)</label>
+
+                                <div class="col-sm-12">
+                                <input type="password" v-model="form.password"
+                                    class="form-control"
+                                    id="password"
+                                    placeholder="Passport"
+                                >
                                 </div>
                             </div>
                            
@@ -165,12 +163,14 @@
 
         methods:{
             updateInfo: function () {
+                this.$Progress.start();
                 this.form.put('api/profile/')
                 .then(() => {
 
+                    this.$Progress.finish();
                 })
                 .catch(()=>{
-
+                    this.$Progress.fail();
                 });
             },
 
