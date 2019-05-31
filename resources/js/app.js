@@ -14,6 +14,10 @@ import VueRouter from 'vue-router';
 import moment from 'moment';
 import VueProgressBar from 'vue-progressbar';
 
+import Gate from './Gate';
+Vue.prototype.$gate = new Gate(window.user);
+
+
 window.Vue = require('vue');
 window.Form = Form;
 
