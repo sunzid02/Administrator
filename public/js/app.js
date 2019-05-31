@@ -2329,7 +2329,8 @@ __webpack_require__.r(__webpack_exports__);
         axios.get('api/user').then(function (_ref) {
           var data = _ref.data;
           return _this3.users = data.data;
-        });
+        } // ({ data }) => (this.users = data.data)
+        );
       }
     },
     //deleteUser

@@ -233,6 +233,7 @@
                 if(this.$gate.isAdmin()){
                     axios.get('api/user').then(
                         ({ data }) => (this.users = data.data)
+                        // ({ data }) => (this.users = data.data)
                     );  
                 }
             },
